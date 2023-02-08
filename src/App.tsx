@@ -10,7 +10,7 @@ function App() {
   const [lastName, setLastName] = useState<string>("");
   return (
     <>
-      <Homepage />
+      {/* <Homepage /> */}
       {/* <PersonalPage
         firstName={firstName}
         lastName={lastName}

@@ -1,22 +1,26 @@
 import styled from "styled-components";
 import Resume from "../Resume";
-import PersonalInputs from "./PersonalInputs";
+import PersonalDetailsPage from "./PersonalDetailsPage";
+import PersonalPageInfoLive from "./PersonalPageInfoLive";
 
 const PersonalPage = (props: any) => {
-  const { firstName, lastName, setFirstName, setLastName } = props;
+  const { personalInfo, setPersonalInfo } = props;
+
   return (
     <PersonalPageContainer>
-      <PersonalInputs setFirstName={setFirstName} setLastName={setLastName} />
-      <Resume firstName={firstName} lastName={lastName} />
+      <PersonalDetailsPage
+        personalInfo={personalInfo}
+        setPersonalInfo={setPersonalInfo}
+      />
+      <PersonalPageInfoLive personalInfo={personalInfo} />
     </PersonalPageContainer>
   );
 };
 
 const PersonalPageContainer = styled.div`
-  position: relative;
-  width: 1920px;
-  height: 1080px;
-
+  display: flex;
+  width: 100%;
+  height: 100%;
   background: #f9f9f9;
 `;
 export default PersonalPage;

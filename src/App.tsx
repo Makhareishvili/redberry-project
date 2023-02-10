@@ -4,24 +4,10 @@ import ExperiencePage from "./components/experiencepage/ExperiencePage";
 import FinalResumePage from "./components/finalresumepage/FinalResumePage";
 import Homepage from "./components/homepage/HomePage";
 import PersonalPage from "./components/personalpage/PersonalPage";
+import ApplicationContainer from "./Containers/ApplicationContainer";
 
 function App() {
-  const [firstName, setFirstName] = useState<string>("");
-  const [lastName, setLastName] = useState<string>("");
-  return (
-    <>
-      {/* <Homepage /> */}
-      {/* <PersonalPage
-        firstName={firstName}
-        lastName={lastName}
-        setFirstName={setFirstName}
-        setLastName={setLastName}
-      /> */}
-      {/* <ExperiencePage /> */}
-      {/* <EducationPage /> */}
-      {/* <FinalResumePage /> */}
-    </>
-  );
+  return <ApplicationContainer />;
 }
 
 export default App;

@@ -1,21 +1,25 @@
 import styled from "styled-components";
 import Resume from "../Resume";
-import EducationInputs from "./EducationInputs";
+import EducationDetailsPage from "./EducationDetailsPage";
+import EducationPageInfoLive from "./EducationPageIndoLive";
 
-const EducationPage = () => {
+const EducationPage = (props: any) => {
+  const { educationInfo, setEducationInfo } = props;
   return (
     <EducationPageContainer>
-      <EducationInputs />
-      <Resume />
+      <EducationDetailsPage
+        educationInfo={educationInfo}
+        setEducationInfo={setEducationInfo}
+      />
+      <EducationPageInfoLive />
     </EducationPageContainer>
   );
 };
 
 const EducationPageContainer = styled.div`
-  position: relative;
-  width: 1920px;
-  height: 1080px;
-
+  display: flex;
+  width: 100%;
+  height: 100%;
   background: #f9f9f9;
 `;
 

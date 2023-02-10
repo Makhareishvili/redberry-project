@@ -5,8 +5,19 @@
 }
 
 body {
-  display: flex;
-  background-color: black;
-  width: 1920px;
-  height: 1080px;
+  height: 100vh;
+}
+
+#root {
+  height: 100%;
+}
+
+input {
+  border: 1px solid #bcbcbc;
+  padding: 13px 16px;
+}
+
+input:focus {
+  outline: none !important;
+  border: 2px solid #bcbcbc !important;
 }

@@ -2,11 +2,14 @@ import styled, { css } from "styled-components";
 import bottomlogo from "../assets/bottomstar.png";
 
 const Resume = (props: any) => {
-  const { firstName, lastName, final } = props;
+  const { firstName, lastName, aboutMe, email, phone, final } = props;
   return (
     <ResumeContainer final={final}>
       <h1>{firstName}</h1>
       <h1>{lastName}</h1>
+      <h1>{aboutMe}</h1>
+      <h1>{email}</h1>
+      <h1>{phone}</h1>
       <Div></Div>
     </ResumeContainer>
   );

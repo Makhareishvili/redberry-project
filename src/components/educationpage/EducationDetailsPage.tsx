@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
 import vector from "../../assets/Vector.png";
+import { useNavigate } from "react-router-dom";
 
 const styles = {
   generalLabel: {
@@ -26,19 +27,41 @@ const styles = {
 };
 
 const InputContainer = (props: any) => {
-  const { educationInfo, setEducationInfo } = props;
+  const { educationInfo, setEducationInfo, onSaveLocalStorage } = props;
+  const navigate = useNavigate();
 
   const onSubmit = (e: any) => {
     e.preventDefault();
+    let isAllFieldGood = true;
     let result = { ...educationInfo };
     Object.keys(educationInfo).forEach((key) => {
       let obj = educationInfo[key];
       if (obj.required) {
         obj.validation = obj.value && obj.value.trim().length >= obj.min;
+        if (isAllFieldGood) {
+          isAllFieldGood = obj.value && obj.value.trim().length >= obj.min;
+        }
+
+        if (obj.regex) {
+          obj.validation = checkRegex(key, obj.value);
+          if (isAllFieldGood) {
+            isAllFieldGood = checkRegex(key, obj.value);
+          }
+        }
+      } else if (obj.regex) {
+        obj.validation = obj.value ? checkRegex(key, obj.value) : true;
+        if (isAllFieldGood) {
+          isAllFieldGood = obj.value ? checkRegex(key, obj.value) : true;
+        }
+      } else {
+        obj.validation = true;
       }
       result[key] = obj;
     });
     setEducationInfo(result);
+    if (isAllFieldGood) {
+      navigate("/final");
+    }
   };
 
   const onChange = (key: any, value: any) => {
@@ -51,11 +74,12 @@ const InputContainer = (props: any) => {
     }
 
     setEducationInfo({ ...educationInfo, obj });
+    onSaveLocalStorage({ ...educationInfo, obj }, "educationInfo");
   };
 
   const checkRegex = (key: any, value: any) => {
     let obj = educationInfo[key];
-    return obj.regex?.test(value);
+    return new RegExp(obj.regex).test(value);
   };
   const isFieldErorr = (key: any) => {
     let obj = educationInfo[key];
@@ -93,7 +117,7 @@ const InputContainer = (props: any) => {
         </Link>
         <div style={{ padding: "45px 149px" }}>
           <Header>
-            <span>გამოცდილება</span>
+            <span>განათლება</span>
             <PageNumber>3/3</PageNumber>
           </Header>
           <div

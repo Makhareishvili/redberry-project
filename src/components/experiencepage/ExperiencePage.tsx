@@ -2,17 +2,28 @@ import styled from "styled-components";
 import Resume from "../Resume";
 import { useState } from "react";
 import ExperienceDetailsPage from "./ExperienceDetailsPage";
-import ExperiencePageInfoLive from "./ExperiencePageInfoLive";
+import PersonalPageInfoLive from "../personalpage/PersonalPageInfoLive";
 
 const ExperiencePage = (props: any) => {
-  const { experienceInfo, setExperienceInfo } = props;
+  const {
+    experienceInfo,
+    setExperienceInfo,
+    onSaveLocalStorage,
+    personalInfo,
+    educationInfo,
+  } = props;
   return (
     <ExperiencePageContainer>
       <ExperienceDetailsPage
         experienceInfo={experienceInfo}
         setExperienceInfo={setExperienceInfo}
+        onSaveLocalStorage={onSaveLocalStorage}
       />
-      <ExperiencePageInfoLive />
+      <PersonalPageInfoLive
+        personalInfo={personalInfo}
+        experienceInfo={experienceInfo}
+        educationInfo={educationInfo}
+      />
     </ExperiencePageContainer>
   );
 };

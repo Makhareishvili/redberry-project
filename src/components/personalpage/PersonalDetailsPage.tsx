@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import styled from "styled-components";
 import vector from "../../assets/Vector.png";
+import { useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
 
 const styles = {
@@ -36,26 +37,45 @@ const styles = {
 };
 
 const PersonalDetailsPage = (props: any) => {
-  const { personalInfo, setPersonalInfo } = props;
+  const { personalInfo, setPersonalInfo, onSaveLocalStorage } = props;
   const imgInputRef = useRef<any>();
+  const navigate = useNavigate();
 
   const onSubmit = (e: any) => {
     e.preventDefault();
+    let isAllFieldGood = true;
     let result = { ...personalInfo };
     Object.keys(personalInfo).forEach((key) => {
-      let obj = personalInfo[key];
-      if (obj.required) {
-        obj.validation = obj.value && obj.value.trim().length >= obj.min;
+      if (key !== "obj") {
+        let obj = personalInfo[key];
+        if (obj.required) {
+          if (isAllFieldGood) {
+            isAllFieldGood = obj.value && obj.value.trim().length >= obj.min;
+          }
 
-        if (obj.regex) {
-          obj.validation = checkRegex(key, obj.value);
+          obj.validation = obj.value && obj.value.trim().length >= obj.min;
+
+          if (obj.regex) {
+            obj.validation = checkRegex(key, obj.value);
+            if (isAllFieldGood) {
+              isAllFieldGood = checkRegex(key, obj.value);
+            }
+          }
+        } else if (obj.regex) {
+          obj.validation = obj.value ? checkRegex(key, obj.value) : true;
+          if (isAllFieldGood) {
+            isAllFieldGood = obj.value ? checkRegex(key, obj.value) : true;
+          }
+        } else {
+          obj.validation = true;
         }
-      } else {
-        obj.validation = true;
+        result[key] = obj;
       }
-      result[key] = obj;
     });
     setPersonalInfo(result);
+    if (isAllFieldGood) {
+      navigate("/experienceinfo");
+    }
   };
   //
   const setPhoneValue = () => {
@@ -93,7 +113,7 @@ const PersonalDetailsPage = (props: any) => {
   //
   const checkRegex = (key: any, value: any) => {
     let obj = personalInfo[key];
-    return obj.regex?.test(value);
+    return new RegExp(obj.regex).test(value);
   };
   const onChange = (key: any, value: any) => {
     let obj = personalInfo[key];
@@ -109,8 +129,12 @@ const PersonalDetailsPage = (props: any) => {
           value && obj.min <= value.trim().length && checkRegex(key, value);
       }
       //
+    } else if (obj.regex) {
+      obj.validation =
+        value && obj.min <= value.trim().length && checkRegex(key, value);
     }
     setPersonalInfo({ ...personalInfo, obj });
+    onSaveLocalStorage({ ...personalInfo, obj }, "userInfo");
   };
 
   const isFieldErorr = (key: any) => {
@@ -145,6 +169,7 @@ const PersonalDetailsPage = (props: any) => {
     image.validation = true;
     image.value = value;
     setPersonalInfo({ ...personalInfo, image: image });
+    onSaveLocalStorage({ ...personalInfo, image: image }, "userInfo");
   };
 
   return (
@@ -159,7 +184,7 @@ const PersonalDetailsPage = (props: any) => {
           <span>პირადი ინფორმაცია</span>
           <PageNumber>1/3</PageNumber>
         </Header>
-        <div style={{ paddingTop: "70px" }}>
+        <div style={{ paddingTop: "40px" }}>
           <div
             style={{
               display: "flex",
@@ -173,6 +198,7 @@ const PersonalDetailsPage = (props: any) => {
               <input
                 style={{ ...getInputStyles("firstName") }}
                 onChange={(e) => onChange("firstName", e.target.value)}
+                value={personalInfo.firstName.value}
               />
               <p style={{ ...styles.inputHelper }}>
                 მინიმუმ 2 სიმბოლო, ქართული ასოები
@@ -183,6 +209,7 @@ const PersonalDetailsPage = (props: any) => {
               <input
                 style={{ ...getInputStyles("lastName") }}
                 onChange={(e) => onChange("lastName", e.target.value)}
+                value={personalInfo.lastName.value}
               />
               <p style={{ ...styles.inputHelper }}>
                 მინიმუმ 2 სიმბოლო, ქართული ასოები
@@ -220,9 +247,14 @@ const PersonalDetailsPage = (props: any) => {
             <div style={{ ...getLabelStyles("aboutMe") }}>
               ჩემ შესახებ (არასავალდებულო)
             </div>
-            <input
-              style={{ ...getInputStyles("aboutMe") }}
+            <textarea
+              style={{
+                ...getInputStyles("aboutMe"),
+                resize: "none",
+                height: "100px",
+              }}
               onChange={(e) => onChange("aboutMe", e.target.value)}
+              value={personalInfo.aboutMe.value}
             />
           </div>
           <div style={{ paddingTop: "33px" }}>
@@ -230,6 +262,7 @@ const PersonalDetailsPage = (props: any) => {
             <input
               style={{ ...getInputStyles("email"), width: "100%" }}
               onChange={(e) => onChange("email", e.target.value)}
+              value={personalInfo.email.value}
             />
             <p style={{ ...styles.inputHelper }}>
               უნდა მთავრდებოდეს @redberry.ge-ით

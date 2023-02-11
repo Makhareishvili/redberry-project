@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
 import styled from "styled-components";
 import vector from "../../assets/Vector.png";
-
+import { useNavigate } from "react-router-dom";
 const styles = {
   generalLabel: {
     fontWeight: 500,
@@ -25,19 +25,42 @@ const styles = {
 };
 
 const EInputContainer = (props: any) => {
-  const { experienceInfo, setExperienceInfo } = props;
+  const { experienceInfo, setExperienceInfo, onSaveLocalStorage } = props;
+  const navigate = useNavigate();
 
   const onSubmit = (e: any) => {
+    debugger;
     e.preventDefault();
+    let isAllFieldGood = true;
     let result = { ...experienceInfo };
     Object.keys(experienceInfo).forEach((key) => {
       let obj = experienceInfo[key];
       if (obj.required) {
         obj.validation = obj.value && obj.value.trim().length >= obj.min;
+        if (isAllFieldGood) {
+          isAllFieldGood = obj.value && obj.value.trim().length >= obj.min;
+        }
+
+        if (obj.regex) {
+          obj.validation = checkRegex(key, obj.value);
+          if (isAllFieldGood) {
+            isAllFieldGood = checkRegex(key, obj.value);
+          }
+        }
+      } else if (obj.regex) {
+        obj.validation = obj.value ? checkRegex(key, obj.value) : true;
+        if (isAllFieldGood) {
+          isAllFieldGood = obj.value ? checkRegex(key, obj.value) : true;
+        }
+      } else {
+        obj.validation = true;
       }
       result[key] = obj;
     });
     setExperienceInfo(result);
+    if (isAllFieldGood) {
+      navigate("/educationinfo");
+    }
   };
 
   const onChange = (key: any, value: any) => {
@@ -50,13 +73,14 @@ const EInputContainer = (props: any) => {
     }
 
     setExperienceInfo({ ...experienceInfo, obj });
+    onSaveLocalStorage({ ...experienceInfo, obj }, "experienceInfo");
   };
+
   const checkRegex = (key: any, value: any) => {
     let obj = experienceInfo[key];
-    // console.log(obj.regex?.test(value));
-    console.log(obj.value);
-    return obj.regex?.test(value);
+    return new RegExp(obj.regex).test(value);
   };
+
   const isFieldErorr = (key: any) => {
     let obj = experienceInfo[key];
     if (obj.validation === null || obj.validation) {
@@ -108,6 +132,7 @@ const EInputContainer = (props: any) => {
               <input
                 style={{ ...getInputStyles("position") }}
                 onChange={(e) => onChange("position", e.target.value)}
+                value={experienceInfo.position.value}
               />
               <p style={{ ...styles.inputHelper }}>მინიმუმ 2 სიმბოლო</p>
             </div>
@@ -118,6 +143,7 @@ const EInputContainer = (props: any) => {
               <input
                 style={{ ...getInputStyles("employer") }}
                 onChange={(e) => onChange("employer", e.target.value)}
+                value={experienceInfo.employer.value}
               />
               <p style={{ ...styles.inputHelper }}>მინიმუმ 2 სიმბოლო</p>
             </div>
@@ -137,6 +163,7 @@ const EInputContainer = (props: any) => {
                   style={{ ...getInputStyles("startDate") }}
                   onChange={(e) => onChange("startDate", e.target.value)}
                   type="date"
+                  value={experienceInfo.startDate.value}
                 />
               </div>
               <div style={{ width: "100%" }}>
@@ -147,6 +174,7 @@ const EInputContainer = (props: any) => {
                   style={{ ...getInputStyles("endDate") }}
                   onChange={(e) => onChange("endDate", e.target.value)}
                   type="date"
+                  value={experienceInfo.endDate.value}
                 />
               </div>
             </div>
@@ -155,6 +183,7 @@ const EInputContainer = (props: any) => {
               <input
                 style={{ ...getInputStyles("description") }}
                 onChange={(e) => onChange("description", e.target.value)}
+                value={experienceInfo.description.value}
               />
             </div>
           </div>

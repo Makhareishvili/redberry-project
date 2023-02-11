@@ -1,17 +1,28 @@
 import styled from "styled-components";
+import PersonalPageInfoLive from "../personalpage/PersonalPageInfoLive";
 import Resume from "../Resume";
 import EducationDetailsPage from "./EducationDetailsPage";
-import EducationPageInfoLive from "./EducationPageIndoLive";
 
 const EducationPage = (props: any) => {
-  const { educationInfo, setEducationInfo } = props;
+  const {
+    educationInfo,
+    setEducationInfo,
+    personalInfo,
+    experienceInfo,
+    onSaveLocalStorage,
+  } = props;
   return (
     <EducationPageContainer>
       <EducationDetailsPage
         educationInfo={educationInfo}
         setEducationInfo={setEducationInfo}
+        onSaveLocalStorage={onSaveLocalStorage}
       />
-      <EducationPageInfoLive />
+      <PersonalPageInfoLive
+        personalInfo={personalInfo}
+        experienceInfo={experienceInfo}
+        educationInfo={educationInfo}
+      />
     </EducationPageContainer>
   );
 };

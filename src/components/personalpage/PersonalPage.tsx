@@ -4,15 +4,26 @@ import PersonalDetailsPage from "./PersonalDetailsPage";
 import PersonalPageInfoLive from "./PersonalPageInfoLive";
 
 const PersonalPage = (props: any) => {
-  const { personalInfo, setPersonalInfo } = props;
+  const {
+    personalInfo,
+    setPersonalInfo,
+    onSaveLocalStorage,
+    experienceInfo,
+    educationInfo,
+  } = props;
 
   return (
     <PersonalPageContainer>
       <PersonalDetailsPage
         personalInfo={personalInfo}
         setPersonalInfo={setPersonalInfo}
+        onSaveLocalStorage={onSaveLocalStorage}
       />
-      <PersonalPageInfoLive personalInfo={personalInfo} />
+      <PersonalPageInfoLive
+        personalInfo={personalInfo}
+        experienceInfo={experienceInfo}
+        educationInfo={educationInfo}
+      />
     </PersonalPageContainer>
   );
 };

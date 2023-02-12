@@ -1,120 +1,92 @@
 import styled from "styled-components";
-import vector from "../../assets/Vector.png";
-import Resume from "../Resume";
+import PersonalPageInfoLive from "../personalpage/PersonalPageInfoLive";
 import closelogo from "../../assets/close.png";
+import vector from "../../assets/Vector.png";
+import { Link } from "react-router-dom";
+import { useState } from "react";
 
-const FinalResumePage = () => {
+const FinalResumePage = (props: any) => {
+  const { personalInfo, experienceInfo, educationInfo } = props;
+  const [isActive, setIsActive] = useState(true);
+  const localStorageClearer = () => {
+    localStorage.clear();
+  };
   return (
     <ResumePageContainer>
-      <BackDiv>
-        <Ellipse>
-          <Img src={vector} />
-        </Ellipse>
-      </BackDiv>
-      <Resume final />
-      <DisplayMessageContainer>
-        <CloseDiv>
-          <CloseImg src={closelogo} />
-        </CloseDiv>
-        <Message>რეზიუმე წარმატებით გაიგზავნა 🎉</Message>
-      </DisplayMessageContainer>
+      <div>
+        <Link to={"/"}>
+          <BackButton onClick={() => localStorageClearer()}>
+            <img src={vector} />
+          </BackButton>
+        </Link>
+      </div>
+      <PersonalPageInfoLive
+        isFinal
+        personalInfo={personalInfo}
+        experienceInfo={experienceInfo}
+        educationInfo={educationInfo}
+      />
+      {isActive && (
+        <DisplayMessageContainer>
+          <Message>რეზიუმე წარმატებით გაიგზავნა 🎉</Message>
+          <CloseDiv>
+            <CloseImg onClick={() => setIsActive(!isActive)} src={closelogo} />
+          </CloseDiv>
+        </DisplayMessageContainer>
+      )}
     </ResumePageContainer>
   );
 };
 
 const ResumePageContainer = styled.div`
-  position: relative;
-  width: 1920px;
-  height: 1263px;
-
+  width: 100%;
+  height: 100vh;
   background: #ffffff;
-`;
-const BackDiv = styled.div`
-  position: absolute;
-  width: 40px;
-  height: 40px;
-  left: 48px;
-  top: 45px;
-`;
-const Ellipse = styled.div`
+  padding: 55px 70px 55px 48px;
   display: flex;
   justify-content: center;
-  align-items: center;
-  /* position: absolute; */
-  width: 40px;
-  height: 40px;
-  left: 48px;
-  top: 45px;
-
-  border-radius: 20px;
-
-  background: #f9f9f9;
 `;
-const Img = styled.img`
-  /* position: absolute; */
-  width: 9.21px;
-  height: 16px;
-  left: 62px;
-  top: 57px;
-
-  /* შავი/500 */
-
-  /* background: #2e2e2e; */
-`;
-// DisplayMessageContainer
 const DisplayMessageContainer = styled.div`
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  padding: 28px 30px 30px;
-  gap: 10px;
-
   position: absolute;
+  right: 90px;
+  display: flex;
   width: 427px;
   height: 167px;
-  left: 1423px;
-  top: 53px;
-
   background: #ffffff;
   border: 1px solid #e4e4e4;
   box-shadow: 0px 4px 28px rgba(0, 0, 0, 0.25);
   border-radius: 8px;
+  padding: 40px 30px;
 `;
 const Message = styled.p`
   width: 364px;
   height: 86px;
-
-  font-family: "Helvetica Neue";
   font-style: normal;
   font-weight: 500;
   font-size: 28px;
   line-height: 43px;
-  /* or 154% */
-
-  /* off black */
-
   color: #1a1a1a;
-
-  /* Inside auto layout */
-
-  flex: none;
-  order: 0;
-  flex-grow: 0;
 `;
 const CloseDiv = styled.div`
-  /* position: absolute; */
   width: 20px;
   height: 20px;
-  left: 17.18%;
-  left: 1822px;
-  top: 67px;
-
   cursor: pointer;
-`;
-const CloseImg = styled.img`
   position: absolute;
-  right: 5%;
-  top: 15.18%;
-  bottom: 17.19%;
+  right: 20px;
+  top: 20px;
+`;
+const CloseImg = styled.img``;
+const BackButton = styled.div`
+  position: absolute;
+  width: 40px;
+  height: 40px;
+  left: 48px;
+  top: 45px;
+  background: #f9f9f9;
+  border-radius: 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
 `;
 export default FinalResumePage;

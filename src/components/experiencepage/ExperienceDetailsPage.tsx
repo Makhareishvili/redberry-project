@@ -187,14 +187,24 @@ const EInputContainer = (props: any) => {
               />
             </div>
           </div>
-          <button type="submit">
-            <p>უკან</p>
-          </button>
-          <Link to={"/educationinfo"}>
-            <button type="submit">
-              <p onClick={(e) => onSubmit(e)}>შემდეგი</p>
-            </button>
-          </Link>
+          <div
+            style={{
+              display: "flex",
+              justifyContent: "space-between",
+              paddingTop: "130px",
+            }}
+          >
+            <Link to={"/personalinfo"}>
+              <BackBottomButton type="submit">
+                <p>უკან</p>
+              </BackBottomButton>
+            </Link>
+            <Link to={"/educationinfo"}>
+              <NextButton type="submit">
+                <p onClick={(e) => onSubmit(e)}>შემდეგი</p>
+              </NextButton>
+            </Link>
+          </div>
         </div>
       </div>
     </>
@@ -222,6 +232,34 @@ const Header = styled.div`
   padding-bottom: 12px;
   display: flex;
   justify-content: space-between;
+`;
+const NextButton = styled.button`
+  font-style: normal;
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 20px;
+  letter-spacing: 0.08em;
+  color: #ffffff;
+  width: 151px;
+  height: 48px;
+  background: #6b40e3;
+  border-radius: 4px;
+  border: none;
+  cursor: pointer;
+`;
+const BackBottomButton = styled.button`
+  width: 113px;
+  height: 48px;
+  background: #6b40e3;
+  border-radius: 4px;
+  border: none;
+  font-style: normal;
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 20px;
+  letter-spacing: 0.08em;
+  cursor: pointer;
+  color: #ffffff;
 `;
 
 const PageNumber = styled.span`

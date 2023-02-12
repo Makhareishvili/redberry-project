@@ -132,6 +132,7 @@ const InputContainer = (props: any) => {
               <input
                 style={{ ...getInputStyles("institute") }}
                 onChange={(e) => onChange("institute", e.target.value)}
+                value={educationInfo.institute.value}
               />
               <p style={{ ...styles.inputHelper }}>მინიმუმ 2 სიმბოლო</p>
             </div>
@@ -150,6 +151,7 @@ const InputContainer = (props: any) => {
                 <input
                   style={{ ...getInputStyles("degree") }}
                   onChange={(e) => onChange("degree", e.target.value)}
+                  value={educationInfo.degree.value}
                 />
                 <p style={{ ...styles.inputHelper }}>მინიმუმ 2 სიმბოლო</p>
               </div>
@@ -161,6 +163,7 @@ const InputContainer = (props: any) => {
                   style={{ ...getInputStyles("endDate") }}
                   onChange={(e) => onChange("endDate", e.target.value)}
                   type="date"
+                  value={educationInfo.endDate.value}
                 />
               </div>
             </div>
@@ -169,15 +172,26 @@ const InputContainer = (props: any) => {
               <input
                 style={{ ...getInputStyles("description") }}
                 onChange={(e) => onChange("description", e.target.value)}
+                value={educationInfo.description.value}
               />
             </div>
           </div>
-          <button type="submit">
-            <p>უკან</p>
-          </button>
-          <button type="submit">
-            <p onClick={(e) => onSubmit(e)}>დასრულება</p>
-          </button>
+          <div
+            style={{
+              display: "flex",
+              justifyContent: "space-between",
+              paddingTop: "200px",
+            }}
+          >
+            <Link to={"/experienceInfo"}>
+              <BackBottomButton type="submit">
+                <p>უკან</p>
+              </BackBottomButton>
+            </Link>
+            <NextButton type="submit">
+              <p onClick={(e) => onSubmit(e)}>დასრულება</p>
+            </NextButton>
+          </div>
         </div>
       </div>
     </>
@@ -206,7 +220,34 @@ const Header = styled.div`
   display: flex;
   justify-content: space-between;
 `;
-
+const NextButton = styled.button`
+  font-style: normal;
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 20px;
+  letter-spacing: 0.08em;
+  color: #ffffff;
+  width: 151px;
+  height: 48px;
+  background: #6b40e3;
+  border-radius: 4px;
+  border: none;
+  cursor: pointer;
+`;
+const BackBottomButton = styled.button`
+  width: 113px;
+  height: 48px;
+  background: #6b40e3;
+  border-radius: 4px;
+  border: none;
+  font-style: normal;
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 20px;
+  letter-spacing: 0.08em;
+  cursor: pointer;
+  color: #ffffff;
+`;
 const PageNumber = styled.span`
   font-weight: 400;
   font-size: 20px;

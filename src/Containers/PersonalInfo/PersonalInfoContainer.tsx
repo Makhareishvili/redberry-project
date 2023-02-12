@@ -4,7 +4,7 @@ import PersonalPage from "../../components/personalpage/PersonalPage";
 const PersonalInfoContainer = ({
   onSaveLocalStorage,
   getLocalStorageObject,
-}) => {
+}: any) => {
   const [personalInfo, setPersonalInfo] = useState<any>({
     firstName: {
       value: "",

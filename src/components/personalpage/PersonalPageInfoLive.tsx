@@ -1,4 +1,5 @@
 import { EmailIcon, PhoneIcon } from "../../icons/svg";
+import ResumeIcon from "../../assets/bottomstar.png";
 
 const styles = {
   fullName: {
@@ -54,91 +55,177 @@ const PersonalPageInfoLive = ({
   personalInfo,
   experienceInfo,
   educationInfo,
+  isFinal,
 }: any) => {
   return (
-    <div style={{ flex: 2, padding: "45px 80px", background: "#FFFFFF" }}>
-      {personalInfo && (
-        <div style={{ display: "flex", justifyContent: "space-between" }}>
-          <div style={{ flex: "2", paddingTop: "20px", flexDirection: "row" }}>
+    <div
+      style={{
+        width: `${isFinal && "820px"}`,
+        flex: `${!isFinal && 2}`,
+        padding: `${!isFinal && "45px 80px"}`,
+        background: "#FFFFFF",
+        display: "flex",
+        justifyContent: "space-between",
+        height: "100%",
+        border: `${isFinal && "1px solid #000000"}`,
+      }}
+    >
+      <div
+        style={{
+          display: "flex",
+          flexDirection: "column",
+          justifyContent: "space-between",
+          padding: `${isFinal && "48px 75px 45px 80px"}`,
+        }}
+      >
+        <div>
+          {personalInfo && (
+            <div style={{ display: "flex", justifyContent: "space-between" }}>
+              <div
+                style={{
+                  flex: "2",
+                  paddingTop: "20px",
+                  flexDirection: "row",
+                }}
+              >
+                <div
+                  style={{
+                    display: "flex",
+                    gap: "20px",
+                  }}
+                >
+                  <h1 style={{ ...styles.fullName }}>
+                    {personalInfo.firstName.value} {personalInfo.lastName.value}
+                  </h1>
+                </div>
+                <div style={{ paddingTop: "17px", ...styles.email }}>
+                  {Boolean(personalInfo.email.value) && (
+                    <p style={{ display: "flex", alignItems: "center" }}>
+                      <EmailIcon />
+                      <span style={{ marginLeft: "10px" }}>
+                        {personalInfo.email.value}
+                      </span>
+                    </p>
+                  )}
+                  <p style={{ paddingTop: "10px" }}>
+                    {Boolean(personalInfo.phone.value) && (
+                      <p style={{ display: "flex", alignItems: "center" }}>
+                        <PhoneIcon />
+                        <span style={{ marginLeft: "10px" }}>
+                          {personalInfo.phone.value}
+                        </span>
+                      </p>
+                    )}
+                  </p>
+                </div>
+                {personalInfo.aboutMe.value && (
+                  <>
+                    <p style={{ ...styles.title }}>ჩემ შესახებ</p>
+                    <p style={{ paddingTop: "15px", ...styles.aboutMe }}>
+                      {personalInfo.aboutMe.value}
+                    </p>
+                  </>
+                )}
+              </div>
+              <div style={{ flex: 1.2 }}>
+                <div>
+                  {personalInfo.image.value && (
+                    <img
+                      src={personalInfo.image.value}
+                      alt="image"
+                      style={{ ...styles.profileImg }}
+                    />
+                  )}
+                </div>
+              </div>
+            </div>
+          )}
+          {experienceInfo && (
             <div
               style={{
-                display: "flex",
-                gap: "20px",
+                borderTop: "1px solid #C8C8C8",
+                marginTop: "20px",
               }}
             >
-              <h1 style={{ ...styles.fullName }}>
-                {personalInfo.firstName.value} {personalInfo.lastName.value}
-              </h1>
-            </div>
-            <div style={{ paddingTop: "17px", ...styles.email }}>
-              {Boolean(personalInfo.email.value) && (
-                <p style={{ display: "flex", alignItems: "center" }}>
-                  <EmailIcon />
-                  <span style={{ marginLeft: "10px" }}>
-                    {personalInfo.email.value}
-                  </span>
+              <p style={{ ...styles.title, paddingTop: "24px" }}>გამოცდილება</p>
+              <div
+                style={{
+                  display: "flex",
+                  paddingTop: "20px",
+                  flexDirection: "column",
+                }}
+              >
+                <p
+                  style={{
+                    fontWeight: "500",
+                    fontSize: "16px",
+                    lineHeight: "20px",
+                    color: "#1A1A1A",
+                    paddingBottom: "7px",
+                  }}
+                >
+                  {experienceInfo.position.value}{" "}
+                  {experienceInfo.employer.value}
                 </p>
-              )}
-              <p style={{ paddingTop: "10px" }}>
-                {Boolean(personalInfo.phone.value) && (
-                  <p style={{ display: "flex", alignItems: "center" }}>
-                    <PhoneIcon />
-                    <span style={{ marginLeft: "10px" }}>
-                      {personalInfo.phone.value}
-                    </span>
+                {Boolean(experienceInfo.startDate.value) && (
+                  <p
+                    style={{
+                      fontStyle: "italic",
+                      fontWeight: "400",
+                      fontSize: "16px",
+                      lineHeight: "19px",
+                      color: "#919191",
+                      paddingBottom: "16px",
+                    }}
+                  >
+                    {experienceInfo.startDate.value} -{" "}
+                    {experienceInfo.endDate.value}
                   </p>
                 )}
-              </p>
-            </div>
-            {personalInfo.aboutMe.value && (
-              <>
-                <p style={{ ...styles.title }}>ჩემ შესახებ</p>
-                <p style={{ paddingTop: "15px", ...styles.aboutMe }}>
-                  {personalInfo.aboutMe.value}
+                <p
+                  style={{
+                    maxHeight: "150px",
+                    overflow: "auto",
+                    overflowWrap: "break-word",
+                    //
+                    fontStyle: "normal",
+                    fontWeight: "400",
+                    fontSize: "16px",
+                    lineHeight: "22px",
+
+                    textTransform: "capitalize",
+                    lineBreak: "anywhere",
+                    color: "#000000",
+                  }}
+                >
+                  {experienceInfo.description.value}
                 </p>
-              </>
-            )}
-          </div>
-          <div style={{ flex: 1.2 }}>
-            <div>
-              {personalInfo.image.value && (
-                <img
-                  src={personalInfo.image.value}
-                  alt="image"
-                  style={{ ...styles.profileImg }}
-                />
-              )}
+              </div>
             </div>
-          </div>
-        </div>
-      )}
-      {experienceInfo && (
-        <div
-          style={{
-            borderTop: "1px solid #C8C8C8",
-            marginTop: "20px",
-          }}
-        >
-          <p style={{ ...styles.title, paddingTop: "24px" }}>გამოცდილება</p>
-          <div
-            style={{
-              display: "flex",
-              paddingTop: "20px",
-              flexDirection: "column",
-            }}
-          >
-            <p
+          )}
+          {educationInfo && (
+            <div
               style={{
-                fontWeight: "500",
-                fontSize: "16px",
-                lineHeight: "20px",
-                color: "#1A1A1A",
-                paddingBottom: "7px",
+                borderTop: "1px solid #C8C8C8",
+                marginTop: "20px",
               }}
             >
-              {experienceInfo.position.value} {experienceInfo.employer.value}
-            </p>
-            {Boolean(experienceInfo.startDate.value) && (
+              <p style={{ ...styles.title, paddingTop: "24px" }}>განათლება</p>
+              <div
+                style={{
+                  display: "flex",
+                  paddingTop: "15px",
+                  paddingBottom: "7px",
+                }}
+              >
+                <p>
+                  {educationInfo.institute.value}
+                  {Boolean(educationInfo.degree.value) && <>,</>}
+                </p>
+                <p style={{ paddingLeft: "15px" }}>
+                  {educationInfo.degree.value}
+                </p>
+              </div>
               <p
                 style={{
                   fontStyle: "italic",
@@ -146,87 +233,36 @@ const PersonalPageInfoLive = ({
                   fontSize: "16px",
                   lineHeight: "19px",
                   color: "#919191",
-                  paddingBottom: "16px",
+                  paddingBottom: "15px",
                 }}
               >
-                {experienceInfo.startDate.value} -{" "}
-                {experienceInfo.endDate.value}
+                {educationInfo.endDate.value}
               </p>
-            )}
-            <p
-              style={{
-                maxHeight: "150px",
-                overflow: "auto",
-                overflowWrap: "break-word",
-                //
-                fontStyle: "normal",
-                fontWeight: "400",
-                fontSize: "16px",
-                lineHeight: "22px",
+              <p
+                style={{
+                  maxHeight: "150px",
+                  overflow: "auto",
+                  overflowWrap: "break-word",
+                  //
+                  fontStyle: "normal",
+                  fontWeight: "400",
+                  fontSize: "16px",
+                  lineHeight: "22px",
 
-                textTransform: "capitalize",
-                lineBreak: "anywhere",
-                color: "#000000",
-              }}
-            >
-              {experienceInfo.description.value}
-            </p>
-          </div>
+                  textTransform: "capitalize",
+                  lineBreak: "anywhere",
+                  color: "#000000",
+                }}
+              >
+                {educationInfo.description.value}
+              </p>
+            </div>
+          )}
         </div>
-      )}
-      {educationInfo && (
-        <div
-          style={{
-            borderTop: "1px solid #C8C8C8",
-            marginTop: "20px",
-          }}
-        >
-          <p style={{ ...styles.title, paddingTop: "24px" }}>განათლება</p>
-          <div
-            style={{
-              display: "flex",
-              paddingTop: "15px",
-              paddingBottom: "7px",
-            }}
-          >
-            <p>
-              {educationInfo.institute.value}
-              {Boolean(educationInfo.degree.value) && <>,</>}
-            </p>
-            <p style={{ paddingLeft: "15px" }}>{educationInfo.degree.value}</p>
-          </div>
-          <p
-            style={{
-              fontStyle: "italic",
-              fontWeight: "400",
-              fontSize: "16px",
-              lineHeight: "19px",
-              color: "#919191",
-              paddingBottom: "15px",
-            }}
-          >
-            {educationInfo.endDate.value}
-          </p>
-          <p
-            style={{
-              maxHeight: "150px",
-              overflow: "auto",
-              overflowWrap: "break-word",
-              //
-              fontStyle: "normal",
-              fontWeight: "400",
-              fontSize: "16px",
-              lineHeight: "22px",
-
-              textTransform: "capitalize",
-              lineBreak: "anywhere",
-              color: "#000000",
-            }}
-          >
-            {educationInfo.description.value}
-          </p>
+        <div style={{ bottom: "45px" }}>
+          <img src={ResumeIcon} alt="" />
         </div>
-      )}
+      </div>
     </div>
   );
 };

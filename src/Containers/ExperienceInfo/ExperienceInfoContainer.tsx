@@ -4,7 +4,7 @@ import ExperiencePage from "../../components/experiencepage/ExperiencePage";
 const ExperienceInfoContainer = ({
   onSaveLocalStorage,
   getLocalStorageObject,
-}) => {
+}: any) => {
   const [experienceInfo, setExperienceInfo] = useState<object>({
     position: {
       value: "",

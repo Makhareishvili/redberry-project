@@ -1,6 +1,4 @@
 import styled from "styled-components";
-import Resume from "../Resume";
-import { useState } from "react";
 import ExperienceDetailsPage from "./ExperienceDetailsPage";
 import PersonalPageInfoLive from "../personalpage/PersonalPageInfoLive";
 

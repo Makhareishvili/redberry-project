@@ -13,7 +13,7 @@ const ApplicationContainer = () => {
     }
   }, []);
 
-  const onSaveLocalStorage = (obj, type) => {
+  const onSaveLocalStorage = (obj: any, type: any) => {
     if (type === "userInfo") {
       let result = JSON.parse(localStorage.getItem("userInfo"));
       result.personalInfo = { ...obj };
@@ -73,7 +73,9 @@ const ApplicationContainer = () => {
     },
     {
       path: "/final",
-      element: <FinalResumeContainer />,
+      element: (
+        <FinalResumeContainer getLocalStorageObject={getLocalStorageObject} />
+      ),
     },
   ]);
 

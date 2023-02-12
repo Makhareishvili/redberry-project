@@ -1,5 +1,4 @@
 import styled from "styled-components";
-import Resume from "../Resume";
 import PersonalDetailsPage from "./PersonalDetailsPage";
 import PersonalPageInfoLive from "./PersonalPageInfoLive";
 

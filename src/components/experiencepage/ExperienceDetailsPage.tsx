@@ -2,6 +2,9 @@ import { Link } from "react-router-dom";
 import styled from "styled-components";
 import vector from "../../assets/Vector.png";
 import { useNavigate } from "react-router-dom";
+import doneLogo from "../../assets/done.png";
+import errorLogo from "../../assets/error.png";
+
 const styles = {
   generalLabel: {
     fontWeight: 500,
@@ -106,6 +109,22 @@ const EInputContainer = (props: any) => {
     }
     return temp;
   };
+  const getErrorStyles = (key: any) => {
+    let obj = experienceInfo[key];
+    if (obj.validation) {
+      return {
+        backgroundImage: `url(${doneLogo})`,
+        backgroundRepeat: "no-repeat",
+        backgroundPosition: "right 10px center",
+      };
+    } else if (!isFieldErorr(key)) {
+      return {
+        backgroundImage: `url(${errorLogo})`,
+        backgroundRepeat: "no-repeat",
+        backgroundPosition: "right 10px center",
+      };
+    }
+  };
 
   return (
     <>
@@ -130,7 +149,10 @@ const EInputContainer = (props: any) => {
             <div style={{ paddingBottom: "30px" }}>
               <div style={{ ...getLabelStyles("position") }}>თანამდებობა</div>
               <input
-                style={{ ...getInputStyles("position") }}
+                style={{
+                  ...getInputStyles("position"),
+                  ...getErrorStyles("position"),
+                }}
                 onChange={(e) => onChange("position", e.target.value)}
                 value={experienceInfo.position.value}
               />
@@ -141,7 +163,10 @@ const EInputContainer = (props: any) => {
                 დამსაქმებელი
               </label>
               <input
-                style={{ ...getInputStyles("employer") }}
+                style={{
+                  ...getInputStyles("employer"),
+                  ...getErrorStyles("employer"),
+                }}
                 onChange={(e) => onChange("employer", e.target.value)}
                 value={experienceInfo.employer.value}
               />
@@ -180,8 +205,12 @@ const EInputContainer = (props: any) => {
             </div>
             <div>
               <label style={{ ...getLabelStyles("description") }}>აღწერა</label>
-              <input
-                style={{ ...getInputStyles("description") }}
+              <textarea
+                style={{
+                  ...getInputStyles("description"),
+                  resize: "none",
+                  height: "120px",
+                }}
                 onChange={(e) => onChange("description", e.target.value)}
                 value={experienceInfo.description.value}
               />
@@ -191,7 +220,7 @@ const EInputContainer = (props: any) => {
             style={{
               display: "flex",
               justifyContent: "space-between",
-              paddingTop: "130px",
+              paddingTop: "80px",
             }}
           >
             <Link to={"/personalinfo"}>

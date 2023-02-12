@@ -76,6 +76,7 @@ const PersonalPageInfoLive = ({
           flexDirection: "column",
           justifyContent: "space-between",
           padding: `${isFinal && "48px 75px 45px 80px"}`,
+          width: "100%",
         }}
       >
         <div>

@@ -10,6 +10,7 @@ const FinalResumePage = (props: any) => {
   const [isActive, setIsActive] = useState(true);
   const localStorageClearer = () => {
     localStorage.clear();
+    localStorage.setItem("userInfo", "{}");
   };
   return (
     <ResumePageContainer>

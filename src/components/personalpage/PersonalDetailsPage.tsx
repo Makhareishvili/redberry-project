@@ -1,8 +1,10 @@
 import { useEffect, useRef, useState } from "react";
 import styled from "styled-components";
 import vector from "../../assets/Vector.png";
+import errorLogo from "../../assets/error.png";
 import { useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
+import doneLogo from "../../assets/done.png";
 
 const styles = {
   generalLabel: {
@@ -172,6 +174,22 @@ const PersonalDetailsPage = (props: any) => {
     onSaveLocalStorage({ ...personalInfo, image: image }, "userInfo");
   };
 
+  const getErrorStyles = (key: any) => {
+    let obj = personalInfo[key];
+    if (obj.validation) {
+      return {
+        backgroundImage: `url(${doneLogo})`,
+        backgroundRepeat: "no-repeat",
+        backgroundPosition: "right 10px center",
+      };
+    } else if (!isFieldErorr(key)) {
+      return {
+        backgroundImage: `url(${errorLogo})`,
+        backgroundRepeat: "no-repeat",
+        backgroundPosition: "right 10px center",
+      };
+    }
+  };
   return (
     <div style={{ flex: 3, background: "#F9F9F9" }}>
       <Link to={"/"}>
@@ -194,9 +212,19 @@ const PersonalDetailsPage = (props: any) => {
             }}
           >
             <div style={{ width: "100%" }}>
+              {/* <span
+                style={{
+                  position: "absolute",
+                }}
+              >
+                <img src={deleteLogo} />
+              </span> */}
               <div style={{ ...getLabelStyles("firstName") }}>სახელი</div>
               <input
-                style={{ ...getInputStyles("firstName") }}
+                style={{
+                  ...getInputStyles("firstName"),
+                  ...getErrorStyles("firstName"),
+                }}
                 onChange={(e) => onChange("firstName", e.target.value)}
                 value={personalInfo.firstName.value}
               />
@@ -207,7 +235,10 @@ const PersonalDetailsPage = (props: any) => {
             <div style={{ width: "100%" }}>
               <div style={{ ...getLabelStyles("lastName") }}>გვარი</div>
               <input
-                style={{ ...getInputStyles("lastName") }}
+                style={{
+                  ...getInputStyles("lastName"),
+                  ...getErrorStyles("lastName"),
+                }}
                 onChange={(e) => onChange("lastName", e.target.value)}
                 value={personalInfo.lastName.value}
               />
@@ -260,7 +291,11 @@ const PersonalDetailsPage = (props: any) => {
           <div style={{ paddingTop: "33px" }}>
             <div style={{ ...getLabelStyles("email") }}>ელ.ფოსტა</div>
             <input
-              style={{ ...getInputStyles("email"), width: "100%" }}
+              style={{
+                ...getInputStyles("email"),
+                width: "100%",
+                ...getErrorStyles("email"),
+              }}
               onChange={(e) => onChange("email", e.target.value)}
               value={personalInfo.email.value}
             />
@@ -269,9 +304,19 @@ const PersonalDetailsPage = (props: any) => {
             </p>
           </div>
           <div style={{ paddingTop: "29px" }}>
-            <div style={{ ...getLabelStyles("phone") }}>მობილურის ნომერი</div>
+            <div
+              style={{
+                ...getLabelStyles("phone"),
+              }}
+            >
+              მობილურის ნომერი
+            </div>
             <input
-              style={{ ...getInputStyles("phone"), width: "100%" }}
+              style={{
+                ...getInputStyles("phone"),
+                width: "100%",
+                ...getErrorStyles("phone"),
+              }}
               onChange={(e) => onChange("phone", e.target.value)}
               value={setPhoneValue()}
               maxLength={17}

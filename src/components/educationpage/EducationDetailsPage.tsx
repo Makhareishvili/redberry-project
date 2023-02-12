@@ -3,6 +3,8 @@ import { Link } from "react-router-dom";
 import styled from "styled-components";
 import vector from "../../assets/Vector.png";
 import { useNavigate } from "react-router-dom";
+import doneLogo from "../../assets/done.png";
+import errorLogo from "../../assets/error.png";
 
 const styles = {
   generalLabel: {
@@ -106,6 +108,22 @@ const InputContainer = (props: any) => {
     }
     return temp;
   };
+  const getErrorStyles = (key: any) => {
+    let obj = educationInfo[key];
+    if (obj.validation) {
+      return {
+        backgroundImage: `url(${doneLogo})`,
+        backgroundRepeat: "no-repeat",
+        backgroundPosition: "right 10px center",
+      };
+    } else if (!isFieldErorr(key)) {
+      return {
+        backgroundImage: `url(${errorLogo})`,
+        backgroundRepeat: "no-repeat",
+        backgroundPosition: "right 10px center",
+      };
+    }
+  };
 
   return (
     <>
@@ -130,7 +148,10 @@ const InputContainer = (props: any) => {
             <div style={{ paddingBottom: "30px" }}>
               <div style={{ ...getLabelStyles("institute") }}>სასწვლებელი</div>
               <input
-                style={{ ...getInputStyles("institute") }}
+                style={{
+                  ...getInputStyles("institute"),
+                  ...getErrorStyles("institute"),
+                }}
                 onChange={(e) => onChange("institute", e.target.value)}
                 value={educationInfo.institute.value}
               />
@@ -148,11 +169,37 @@ const InputContainer = (props: any) => {
                 <label style={{ ...getLabelStyles("degree") }}>
                   ხარისხი (დროპ-დაუნ ლისტი)
                 </label>
-                <input
-                  style={{ ...getInputStyles("degree") }}
-                  onChange={(e) => onChange("degree", e.target.value)}
-                  value={educationInfo.degree.value}
-                />
+                <div>
+                  <select
+                    name="cars"
+                    id="cars"
+                    style={{ ...getInputStyles("degree") }}
+                    onChange={(e) => onChange("degree", e.target.value)}
+                    value={educationInfo.degree.value}
+                  >
+                    <option hidden>აირჩიეთ ხარისხი</option>
+                    <option value="საშუალო სკოლის დიპლომი">
+                      საშუალო სკოლის დიპლომი
+                    </option>
+                    <option value="ზოგადსაგანმანათლებლო დიპლომი">
+                      ზოგადსაგანმანათლებლო დიპლომი
+                    </option>
+                    <option value="ბაკალავრი">ბაკალავრი</option>
+                    <option value="მაგისტრი">მაგისტრი</option>
+                    <option value="დოქტორი">დოქტორი</option>
+                    <option value="ასოცირებული ხარისხი">
+                      ასოცირებული ხარისხი
+                    </option>
+                    <option value="სტუდენტი">სტუდენტი</option>
+                    <option value="კოლეჯი (ხარისხის გარეშე)">
+                      კოლეჯი (ხარისხის გარეშე)
+                    </option>
+                    <option value="სხვა">სხვა</option>
+                  </select>
+                </div>
+                {/* <input
+                  
+                /> */}
                 <p style={{ ...styles.inputHelper }}>მინიმუმ 2 სიმბოლო</p>
               </div>
               <div style={{ width: "100%" }}>
@@ -169,8 +216,12 @@ const InputContainer = (props: any) => {
             </div>
             <div>
               <label style={{ ...getLabelStyles("description") }}>აღწერა</label>
-              <input
-                style={{ ...getInputStyles("description") }}
+              <textarea
+                style={{
+                  ...getInputStyles("description"),
+                  resize: "none",
+                  height: "180px",
+                }}
                 onChange={(e) => onChange("description", e.target.value)}
                 value={educationInfo.description.value}
               />
@@ -180,7 +231,7 @@ const InputContainer = (props: any) => {
             style={{
               display: "flex",
               justifyContent: "space-between",
-              paddingTop: "200px",
+              paddingTop: "100px",
             }}
           >
             <Link to={"/experienceInfo"}>

@@ -1,6 +1,5 @@
 import styled from "styled-components";
 import PersonalPageInfoLive from "../personalpage/PersonalPageInfoLive";
-import Resume from "../Resume";
 import EducationDetailsPage from "./EducationDetailsPage";
 
 const EducationPage = (props: any) => {
@@ -17,6 +16,8 @@ const EducationPage = (props: any) => {
         educationInfo={educationInfo}
         setEducationInfo={setEducationInfo}
         onSaveLocalStorage={onSaveLocalStorage}
+        personalInfo={personalInfo}
+        experienceInfo={experienceInfo}
       />
       <PersonalPageInfoLive
         personalInfo={personalInfo}

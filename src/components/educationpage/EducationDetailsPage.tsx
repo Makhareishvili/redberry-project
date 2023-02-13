@@ -29,7 +29,13 @@ const styles = {
 };
 
 const InputContainer = (props: any) => {
-  const { educationInfo, setEducationInfo, onSaveLocalStorage } = props;
+  const {
+    educationInfo,
+    setEducationInfo,
+    onSaveLocalStorage,
+    personalInfo,
+    experienceInfo,
+  } = props;
   const navigate = useNavigate();
 
   const onSubmit = (e: any) => {
@@ -63,7 +69,45 @@ const InputContainer = (props: any) => {
     setEducationInfo(result);
     if (isAllFieldGood) {
       navigate("/final");
+      onResumeSentAPI();
     }
+  };
+  const onResumeSentAPI = () => {
+    let obj = {
+      name: personalInfo.firstName.value,
+      surname: personalInfo.lastName.value,
+      email: personalInfo.email.value,
+      phone_number: personalInfo.phone.value,
+      experiences: [
+        {
+          position: experienceInfo.position.value,
+          employer: experienceInfo.employer.value,
+          start_date: experienceInfo.startDate.value,
+          due_date: experienceInfo.endDate.value,
+          description: experienceInfo.description.value,
+        },
+      ],
+      educations: [
+        {
+          institute: educationInfo.institute.value,
+          degree: educationInfo.degree.value,
+          due_date: educationInfo.degree.endDate,
+          description: educationInfo.description.value,
+        },
+      ],
+      image: personalInfo.image.value,
+      about_me: personalInfo.aboutMe,
+    };
+    fetch("https://resume.redberryinternship.ge/api/cvs", {
+      method: "POST",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(obj),
+    })
+      .then((response) => response.json())
+      .then((response) => console.log(JSON.stringify(response)));
   };
 
   const onChange = (key: any, value: any) => {

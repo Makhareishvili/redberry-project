@@ -32,7 +32,6 @@ const EInputContainer = (props: any) => {
   const navigate = useNavigate();
 
   const onSubmit = (e: any) => {
-    debugger;
     e.preventDefault();
     let isAllFieldGood = true;
     let result = { ...experienceInfo };

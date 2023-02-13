@@ -95,8 +95,8 @@ const InputContainer = (props: any) => {
           description: educationInfo.description.value,
         },
       ],
-      image: personalInfo.image.value,
-      about_me: personalInfo.aboutMe,
+      image: personalInfo.image.file,
+      about_me: personalInfo.aboutMe.value,
     };
     fetch("https://resume.redberryinternship.ge/api/cvs", {
       method: "POST",

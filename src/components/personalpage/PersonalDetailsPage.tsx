@@ -164,12 +164,21 @@ const PersonalDetailsPage = (props: any) => {
     return temp;
   };
 
+  const toBase64 = (file: any) =>
+    new Promise((resolve, reject) => {
+      const reader = new FileReader();
+      reader.readAsDataURL(file);
+      reader.onload = () => resolve(reader.result);
+      reader.onerror = (error) => reject(error);
+    });
+
   const onImageChange = (event: any) => {
     const [files]: any = event.target.files;
     let value = URL.createObjectURL(files);
     let image = personalInfo.image;
     image.validation = true;
     image.value = value;
+    image.file = toBase64(event.target.files[0]);
     setPersonalInfo({ ...personalInfo, image: image });
     onSaveLocalStorage({ ...personalInfo, image: image }, "userInfo");
   };
